@@ -1,0 +1,36 @@
+package week7.day3;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
+public class LearnSelectable {
+
+	public static void main(String[] args) throws InterruptedException {
+		ChromeOptions options=new ChromeOptions();
+		options.addArguments("--start-maximized");
+		ChromeDriver driver=new ChromeDriver(options);
+		driver.get("https://jqueryui.com/selectable/");
+		driver.switchTo().frame(0);
+		WebElement ele1= driver.findElement(By.xpath("//li[text()='Item 1']"));
+		WebElement ele2= driver.findElement(By.xpath("//li[text()='Item 2']"));
+		WebElement ele3= driver.findElement(By.xpath("//li[text()='Item 3']"));
+		WebElement ele4= driver.findElement(By.xpath("//li[text()='Item 4']"));
+		WebElement ele5= driver.findElement(By.xpath("//li[text()='Item 5']"));
+		WebElement ele6= driver.findElement(By.xpath("//li[text()='Item 6']"));
+		WebElement ele7= driver.findElement(By.xpath("//li[text()='Item 7']"));
+		Actions builder=new Actions(driver);
+		// select all items
+		builder.keyDown(Keys.CONTROL).click(ele1).click(ele2).click(ele3).click(ele4).click(ele5).click(ele6).click(ele7).keyUp(Keys.CONTROL).perform();
+        // unselect ele 3&5
+		builder.keyDown(Keys.CONTROL).click(ele3).click(ele5).release().perform();
+		// select ele 3&7 only
+		Thread.sleep(5000);
+		builder.keyDown(Keys.CONTROL).click(ele3).click(ele7).keyUp(Keys.CONTROL).perform();
+		
+	}
+
+}
