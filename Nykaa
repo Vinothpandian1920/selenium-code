@@ -1,0 +1,108 @@
+package week7.day5Assignment;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class Nykaa {
+
+	public static void main(String[] args) throws InterruptedException {
+		//ChromeOptions options=new ChromeOptions();
+	//	options.addArguments("--disable-notifications","start--Maximized");
+		EdgeDriver driver=new EdgeDriver();
+		driver.manage().window().maximize();
+		// 1) Go to https://www.nykaa.com/
+		driver.get(" https://www.nykaa.com/");
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+	//	2) Mouseover on Brands and Search L'Oreal Paris
+		WebElement ClickBrand = driver.findElement(By.xpath("//a[text()='brands']"));
+		Actions brand=new Actions(driver);
+		brand.pause(20).moveToElement(ClickBrand).perform();
+		//L'Oreal Paris
+		driver.findElement(By.xpath("//input[@id='brandSearchBox']")).sendKeys("L'Oreal Paris");
+//	3) Click L'Oreal Paris
+		driver.findElement(By.linkText("L'Oreal Paris")).click();
+	//4) Check the title contains L'Oreal Paris(Hint-GetTitle)
+		String title = driver.findElement(By.xpath("//h1[@class='css-mrgb7e']")).getText();
+		System.out.println(title);
+	//5) Click sort By and select customer top rated
+		driver.findElement(By.xpath("//span[@class='sort-name']")).click();
+		//and select customer top rated
+		driver.findElement(By.xpath("//span[text()='customer top rated']")).click();
+//	6) Click Category and 
+		driver.findElement(By.xpath("//span[text()='Category']")).click();
+		//click Hair
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//span[@class='filter-name ']")).click();
+		//->Click haircare
+		driver.findElement(By.xpath("(//span[@class='filter-name '])[1]")).click();
+		// click ->Shampoo
+		Thread.sleep(5000);
+		driver.findElement(By.xpath("(//div[@class='control-indicator checkbox '])[2]")).click();
+		String shampooText = driver.findElement(By.xpath("//span[text()='Shampoo']")).getText();
+		System.out.println(shampooText);		
+//	7) Click->Concern
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//span[text()='Concern']")).click();
+		// click ->Color Protection
+		driver.findElement(By.xpath("//span[text()='Color Protection']")).click();
+	//8)check whether the Filter is applied with Shampoo
+		String checking = driver.findElement(By.xpath("//span[text()='Shampoo']")).getText();
+		System.out.println(checking);
+		if (shampooText.equals(checking)) {
+			System.out.println("Checking sucessfully");			
+		}
+		else {
+			System.out.println("Checking not sucessfully");
+		}
+//	9) Click on L'Oreal Paris Colour Protect Shampoo
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//div[@class='css-43m2vm']")).click();
+//	10) GO to the new window and select size as 175ml
+		Set<String> Window = driver.getWindowHandles();
+		List<String>childWindow=new ArrayList<String>(Window);
+		driver.switchTo().window(childWindow.get(1));
+		String ChildPageTitle = driver.getTitle();
+		System.out.println(ChildPageTitle);
+		driver.findElement(By.xpath("//span[text()='180ml']")).click();
+	//11) Print the MRP of the product
+		String mrpText = driver.findElement(By.xpath("//span[text()='₹209']")).getText();
+		System.out.println("MRP Rate is :" +mrpText);
+//	12) Click on ADD to BAG
+		driver.findElement(By.xpath("//span[text()='Add to Bag']")).click();
+//	13) Go to Shopping Bag 
+		driver.findElement(By.xpath("//button[@class='css-g4vs13']")).click();
+//	14) Print the Grand Total amount
+		driver.switchTo().frame(0);
+		Thread.sleep(2000);
+		String total = driver.findElement(By.xpath("//span[text()='₹279']")).getText();
+		System.out.println("Total amount is :" +total);
+//	15) Click Proceed
+		driver.findElement(By.xpath("(//button[@class='css-1j2bj5f e8tshxd0'])[2]")).click();
+	//16) Click on Continue as Guest
+		driver.findElement(By.xpath("//button[text()='Continue as guest']")).click();
+//	17) Check if this grand total is the same in step 14
+		driver.findElement(By.xpath("(//img[@class='css-16z7tzi ek8d9s80'])[2]")).click();
+		String total1 = driver.findElement(By.xpath("//p[text()='₹279']")).getText();
+		System.out.println("final total amount is:" + total1);
+		if (total.equals(total1)) {
+			System.out.println("Setp 14th grand total and this step grand total are equal");	
+		}
+		else {
+			System.out.println("Setp 14th grand total and this step grand total are not equal");		
+		}
+		//	18) Close all windows
+		driver.quit();
+
+		
+	}
+
+}
