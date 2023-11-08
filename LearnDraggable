@@ -1,0 +1,24 @@
+package week7.day3;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
+public class LearnDraggable {
+
+	public static void main(String[] args) {
+		ChromeOptions options=new ChromeOptions();
+		options.addArguments("--start-maximized");
+		ChromeDriver driver=new ChromeDriver(options);
+		driver.get("https://jqueryui.com/draggable/");
+		driver.switchTo().frame(0);
+		WebElement findElement = driver.findElement(By.id("draggable"));
+		Actions builder=new Actions(driver);
+		builder.dragAndDropBy(findElement, 100, 100).perform();
+		
+
+	}
+
+}
