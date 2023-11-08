@@ -1,0 +1,40 @@
+package week7.day3;
+
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class WebTableErail {
+
+	public static void main(String[] args) {
+		ChromeOptions options=new ChromeOptions();
+		 options.addArguments("--start-Maximized");
+		 ChromeDriver driver=new  ChromeDriver(options);
+		 driver.get("https://erail.in/");
+		 driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+		 WebElement from = driver.findElement(By.id("txtStationFrom"));
+		 from.clear();
+		 from.sendKeys("MS",Keys.ENTER);
+		 WebElement to = driver.findElement(By.id("txtStationFrom"));
+		 to.clear();
+		 to.sendKeys("TEN",Keys.ENTER);
+		 //uncheck the sort on date
+		 driver.findElement(By.id("chkSelectDateOnly")).click();
+		  List<WebElement> trainName = driver.findElements(By.xpath("//table[@class='DataTable TrainList TrainListHeader stickyTrainListHeader']//tr/td[2]/a"));
+          System.out.println(trainName.size());
+          for (int i = 0; i <trainName.size() ; i++) {
+        	  String text = trainName.get(i).getText();
+        	  System.out.println(text);
+        	 
+				
+			}
+		}
+	}                              
+
+
