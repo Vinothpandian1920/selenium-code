@@ -1,0 +1,27 @@
+package week7.day3;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.interactions.Actions;
+
+public class LearnDroppable {
+
+	public static void main(String[] args) {
+		ChromeOptions options=new ChromeOptions();
+		options.addArguments("--start-maximized");
+		ChromeDriver driver=new ChromeDriver(options);
+		driver.get("https://jqueryui.com/droppable/");
+		driver.switchTo().frame(0);
+		WebElement dragPoint = driver.findElement(By.xpath("//div[@id='draggable']"));
+		WebElement dropPoint = driver.findElement(By.xpath("//div[@id='droppable']"));
+		Actions builder=new Actions(driver);
+		builder.dragAndDrop(dragPoint, dropPoint).perform();
+		// to get css value
+		String cssValue = dropPoint.getCssValue("background") ;      
+         System.out.println(cssValue);
+         // in google chrome search the rgb to hex converter apply the rgp value . then get the css colour
+	}
+
+}
