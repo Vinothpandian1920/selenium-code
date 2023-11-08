@@ -1,1 +1,33 @@
+package week7.day1;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+
+public class LearnAlert {
+
+	public static void main(String[] args) throws InterruptedException   {
+		ChromeOptions option=new ChromeOptions ();
+		option.addArguments("-disable-notifications");
+		ChromeDriver driver=new ChromeDriver(option);
+		driver.manage().window().maximize();
+		driver.get("https://leafground.com/alert.xhtml");
+		Thread.sleep(5000);
+		// click simple dialog
+		driver.findElement(By.xpath("//span[text()='Show']")).click();
+		driver.switchTo().alert().accept();
+		// click confirm dialog
+        driver.findElement(By.xpath("(//span[@class='ui-button-text ui-c'])[2]")).click();
+        driver.switchTo().alert().accept();
+        // click prompt alert
+        driver.findElement(By.xpath("(//span[@class='ui-button-text ui-c'])[6]")).click();
+        driver.switchTo().alert().sendKeys("testleaf");
+        driver.switchTo().alert().accept();
+        String text = driver.findElement(By.id("confirm_result")).getText();
+        System.out.println(text);
+        
+        
+	}
+
+}
 
